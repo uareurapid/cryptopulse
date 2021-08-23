@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cryptopulse/static/css/main.8c8b27cf.chunk.css",
-    "main.js": "/cryptopulse/static/js/main.e1f41bb6.chunk.js",
-    "main.js.map": "/cryptopulse/static/js/main.e1f41bb6.chunk.js.map",
+    "main.js": "/cryptopulse/static/js/main.372a4a04.chunk.js",
+    "main.js.map": "/cryptopulse/static/js/main.372a4a04.chunk.js.map",
     "runtime-main.js": "/cryptopulse/static/js/runtime-main.36eacf30.js",
     "runtime-main.js.map": "/cryptopulse/static/js/runtime-main.36eacf30.js.map",
     "static/js/2.23624c23.chunk.js": "/cryptopulse/static/js/2.23624c23.chunk.js",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.36eacf30.js",
     "static/js/2.23624c23.chunk.js",
     "static/css/main.8c8b27cf.chunk.css",
-    "static/js/main.e1f41bb6.chunk.js"
+    "static/js/main.372a4a04.chunk.js"
   ]
 }
