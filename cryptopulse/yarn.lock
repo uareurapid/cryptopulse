@@ -2725,6 +2725,10 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, can
   version "1.0.30001191"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001191.tgz#bacb432b6701f690c8c5f7c680166b9a9f0843d9"
 
+canvas-gauges@^2.1.4, canvas-gauges@^2.1.7:
+  version "2.1.7"
+  resolved "https://registry.yarnpkg.com/canvas-gauges/-/canvas-gauges-2.1.7.tgz#9f8d96960a19c64879083e72e66b773ed1ec8079"
+
 capture-exit@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/capture-exit/-/capture-exit-2.0.0.tgz#fb953bfaebeb781f62898239dabb426d08a509a4"
@@ -7843,6 +7847,12 @@ react-app-polyfill@^2.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
+
+react-canvas-gauges@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-canvas-gauges/-/react-canvas-gauges-1.2.1.tgz#0bbf77f5f6418978e130693f6344d4450417d98d"
+  dependencies:
+    canvas-gauges "^2.1.4"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"
