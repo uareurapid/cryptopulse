@@ -5,12 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #171924;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.mycanvas, #mycanvas, canvas {
+  max-width:260px;
+  max-height: 260px;
+  background-color: transparent;
+}
+
+
+.chart-container {
+  width: 400px; height:280px;
+  margin: 0 auto;
 }
 
 .mywidget {
@@ -28,17 +39,4 @@ code {
 /*overrides */
 .coinPriceBlock-wrapper--dark {
 	background-color: transparent;
-}
-
-
-.mycanvas, #mycanvas, canvas {
-  max-width:260px;
-  max-height: 260px;
-  background-color: transparent;
-}
-
-.lunarcrush {
-  width: 100%; 
-  height: 400px; 
-  padding: 20px;
 }
