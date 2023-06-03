@@ -7,7 +7,7 @@ export default {
     {
       http: {
         method: 'get',
-        path: 'topcoins',
+        path: 'topholders',
         // request: {
         //   schemas: {
         //     'application/json': schema,

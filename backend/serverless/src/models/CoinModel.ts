@@ -26,6 +26,10 @@ export type CoinModel = {
     roi: any,
     last_updated: string
 }
+
+
+export
+
 /**
  * {
         id: 'bitcoin',

@@ -2,6 +2,7 @@ import type { AWS } from '@serverless/typescript';
 
 import hello from '@functions/hello';
 import top10Coins from '@functions/topcoins';
+import top10Holders from '@functions/topholders';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless',
@@ -20,7 +21,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello, top10Coins },
+  functions: { hello, top10Coins, top10Holders },
   package: { individually: true },
   custom: {
     esbuild: {

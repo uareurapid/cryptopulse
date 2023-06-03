@@ -3,6 +3,8 @@ import './App.css';
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import GaugeChart from 'react-gauge-chart';
+import Top50TokenListEthereum from './components/Top50TokenListEthereum';
+import Top10 from './components/Top10';
 
 
 const chartStyle = {
@@ -17,26 +19,23 @@ function App() {
   const [top50Tokens, setTop50Tokens] = useState([]);
 
   useEffect(() => {
-      loadIndex()
+      loadIndex();
+      getTop50Tokens();
+      console.log("top50 tokens", top50Tokens);
   }, []);
-
-  useEffect(() => {
-    getTop50Tokens();
-    console.log("top50 tokens", top50Tokens);
-}, []);
 
   return (
     <div className="App">
       <header className="App-header">
-
-
       
       </header>
 
       {/*see https://canvas-gauges.com/documentation/examples/ */}
       <div className="chart-container">
+       <span className="chart-title">Fear & Greed</span>
       <GaugeChart nrOfLevels={20}
         arcWidth={0.3} 
+        textColor='#000'
         percent={fearAndGreedIndex} 
         style={chartStyle}
 
@@ -44,18 +43,17 @@ function App() {
         </div>
 
         <div>
-        <TokenList/>
+        <Top50TokenListEthereum tokensList={top50Tokens}/>
         </div>
         
-
+        <div>
+        <Top10/>
+        </div>
    
     </div>
   );
 
-  function TokenList() {
-   const list: any = top50Tokens.map( (token: any) => <li>{token.name}</li>);
-   return <ol>{list}</ol>
-  }
+ 
   
 
   async function loadIndex() {
@@ -71,7 +69,8 @@ function App() {
       let data = [];
       data = jsonData.data;
       if(data && data.length > 0) {
-        setFearAndGreedIndex(Number(data[0].value));
+        console.log("set value fear greed to",data[0].value);
+        setFearAndGreedIndex(Number(data[0].value/100));
       }
     })
     .catch((error) => {
