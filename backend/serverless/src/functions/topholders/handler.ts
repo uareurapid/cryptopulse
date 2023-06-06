@@ -10,7 +10,9 @@ const ABI = require('src/utils/ERC20ABI');
 const top10Holders = async (event) => {
 
   try {
-    let top10 = await getTopTokenHoldersERC20('0x6982508145454ce325ddbe47a25d4ec3d2311933');//PEPE
+    let address: string = event.body.address;
+    console.log("Will get top10Holders fro token: " + address);
+    let top10 = await getTopTokenHoldersERC20(address);//PEPE '0x6982508145454ce325ddbe47a25d4ec3d2311933'
     //fetchCryptoRankings();
     return {
       statusCode: 200,

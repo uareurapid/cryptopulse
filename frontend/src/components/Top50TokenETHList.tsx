@@ -1,7 +1,12 @@
 import ImageComponent from "./ImageComponent";
 
-export default function Top50TokenListEthereum(props: any) {
+export default function Top50TokenETHList(props: any) {
    
+    if(props.tokensList.length < 1) {
+        return (
+            <div></div>
+        )
+    }
     //console.log("props",props)
     const list: any = props.tokensList.map( (token: any) =>  {
 

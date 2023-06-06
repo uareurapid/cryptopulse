@@ -3,8 +3,7 @@ import axios from "axios";
 import { CoinModel } from "../../../backend/serverless/src/models/CoinModel";
 import { useEffect, useState } from "react";
 
-export default function Top10() {
-
+export default function Top10Cryptos() {
 
    const [top10, setTop10] = useState([]);
 
@@ -13,29 +12,44 @@ export default function Top10() {
       getTop10CryptoRanking();
    },[]);
 
+   if(!top10 || !top10.length) {
+    return <div></div>
+   }
    return (
-        <div>OLA MUNDO</div>
+
+    <div className="text-align-left">
+        {getList()}
+    </div>
+    
    )
+
+   function getList() {
+    let list = top10.map( function(crypto: any, i: number) {
+        return <li className="li-no-style" key={i}>{i} {crypto.name} {crypto.symbol}: {crypto.quote.USD.market_cap} USD</li>
+    })
+    return list;
+   }
 
    async function getTop10CryptoRanking() {
     
 
     const url = "http://localhost:3000/dev/topcoins";
-    const rankings: any = await axios.get(url);
-    console.log("Top10 rankings: ", rankings);
-    displayRankings(rankings);
+    const rankingsData: any = await axios.get(url);
+    console.log("Top10 rankings: ", rankingsData);
+    setTop10(rankingsData.data.data);
+    //setRankings(rankingsData);
 
    }
     // Function to display the rankings
-  function displayRankings(rankings: any[]): void {
-    console.log('Top 10 Cryptocurrencies by Market Cap:');
-    if(rankings && rankings.length > 0) {
-      rankings.forEach((crypto, index) => {
-        console.log(`${index + 1}. ${crypto.name} (${crypto.symbol}): $${crypto.market_cap}`);
-      });
-    }
-    else console.log("No Top 10 Cryptoc");
-  }
+//   function displayRankings(rankings: any[]): void {
+//     console.log('Top 10 Cryptocurrencies by Market Cap:');
+//     if(rankings && rankings.length > 0) {
+//         rankings.forEach((crypto, index) => {
+//         console.log(`${index + 1}. ${crypto.name} (${crypto.symbol}): $${crypto.market_cap}`);
+//       });
+//     }
+//     else console.log("No Top 10 Cryptoc");
+//   }
   
     
 }

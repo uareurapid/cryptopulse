@@ -28,7 +28,6 @@ export type CoinModel = {
 }
 
 
-export
 
 /**
  * {

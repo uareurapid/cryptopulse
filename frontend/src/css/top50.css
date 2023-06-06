@@ -1,0 +1,30 @@
+.listTop50ActiveTokens {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    padding-top: 24px;
+}
+
+.listTop50ActiveTokens-container {
+    position: relative;
+}
+
+
+.listTop50ActiveTokens-img {
+
+    width: 32px;
+    height: 32px;
+}
+
+.listTop50ActiveTokens-container .listTop50ActiveTokens-img{
+   position: absolute;
+   left: 0%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   margin-left: 10px;
+}
+
+
+.ml-30 {
+    margin-left: 30px;
+}

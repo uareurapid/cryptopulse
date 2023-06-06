@@ -8,13 +8,8 @@ export default {
     {
       http: {
         method: 'get',
-        path: 'topcoins',
-        timeout:30
-        // request: {
-        //   schemas: {
-        //     'application/json': schema,
-        //   },
-        // },
+        path: 'toptokens',
+        timeout:20
       },
     },
   ],

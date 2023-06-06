@@ -11,7 +11,8 @@ const API_ENDPOINT = 'https://api.coingecko.com/api/v3';
 const top10Coins = async (event) => {
 
   try {
-    let top10 = await fetchTop10CoinsFromCoinmarketcap();//fetchCryptoRankings();
+    console.log("Getting top 10 cryptos")
+    let top10 = await fetchTop10CryptosFromCoinmarketcap();//fetchCryptoRankings();
     return {
       statusCode: 200,
       body: JSON.stringify(top10),
@@ -27,7 +28,7 @@ const top10Coins = async (event) => {
   
 };
 
-async function fetchTop10CoinsFromCoinmarketcap(): Promise<any> {
+async function fetchTop10CryptosFromCoinmarketcap(): Promise<any> {
 
   try {
     const response: any = await axios.get('https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=10&convert=USD', {
@@ -36,12 +37,14 @@ async function fetchTop10CoinsFromCoinmarketcap(): Promise<any> {
       },
     });
 
+    console.log("coinmarketcap: reponse",response);
+
     if(response) {
-      console.log("coinmarketcap: reponse",response);
       return response.data;
     }
   }catch(ex) {
-    return null;
+    console.log("coinmarketcap: reponse",[]);
+    return [];
   }
 }
 
