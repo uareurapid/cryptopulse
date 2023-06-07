@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import ImageComponent from "./ImageComponent";
 import Top50TokenETHList from "./Top50TokenETHList";
 import '../css/top50.css'
+import { Link } from 'react-router-dom';
 
 export default function Top50Tokens() {
 
-
-    const [top50Tokens, setTop50Tokens] = useState([]);
+  const [top50Tokens, setTop50Tokens] = useState([]);
 
 
     useEffect( () => {
@@ -29,6 +29,8 @@ export default function Top50Tokens() {
 
         const src = `https://ethplorer.io${token.image}`;
         const tokenAddr = `https://etherscan.io/address/${token.address}`;
+
+        const link = `/Address?wallet=${token.address}`;
         return (
                 
           <div className="listTop50ActiveTokens">
@@ -36,7 +38,7 @@ export default function Top50Tokens() {
             <ImageComponent imageURL={src} cssClass="listTop50ActiveTokens-img"/>
             </div>
             <li className="li-no-style ml-30" key={token.address}><strong>{token.name}</strong> <a target="_blank" href={tokenAddr}>{token.address}</a></li>
-            <button className="ml-20" onClick={()=> getTokenTopHolders(token.address)} >Top Holders</button>
+            <Link className="ml-20 link-button" to={link} >Top Holders</Link>
           </div>
         )
 
@@ -46,28 +48,9 @@ export default function Top50Tokens() {
   }
 
 
-  async function getTokenTopHolders(tokenAddress: string): Promise<any> {
-
-    let body = {
-      address: tokenAddress
-    }
-    let response = await axios.post("http://localhost:3000/dev/topholders", body);
-    console.log(`on frontend topholders for token ${tokenAddress} response is: `,response);
-    /**
-     * address
-: 
-"0x075e72a5edf65f0a5f44699c7654c1a76941ddc8"
-balance
-: 
-25062866203422070000
-share
-: 
-42.56
-    */
-  }
+ 
 
   async function getTop50Tokens() {
-  
 
     let response = await axios.get("http://localhost:3000/dev/toptokens");
     console.log("on frontend response is: ",response);
