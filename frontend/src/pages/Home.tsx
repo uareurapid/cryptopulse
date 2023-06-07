@@ -7,11 +7,12 @@ export default function Home() {
     return (
         <div className="Home">
           <div className="chart-container">
-           <span className="chart-title">Bitcoin Fear & Greed index</span>
+           <div className="chart-title"><h3>Bitcoin Fear & Greed index</h3></div>
               <FearAndGreedChart></FearAndGreedChart>
             </div>
     
-            <div>
+            <div className="mt-20">
+              <hr/>
               <h3>Top 50 Ethereum tokens</h3>
              <Top50Tokens></Top50Tokens>
             </div>

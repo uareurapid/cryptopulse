@@ -4,7 +4,8 @@ import './App.css';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 
 import Home from './pages/Home';
-import Address from './pages/Address';
+import Token from './pages/Token';
+import Wallet from './pages/Wallet';
 
 function App() {
 
@@ -12,12 +13,11 @@ function App() {
   return (
 
     <div className="App">
-      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="Address" element={<Address />} />
+        <Route path="Token" element={<Token />} />
+        <Route path="Wallet" element={<Wallet />} />
       </Routes>
-      </BrowserRouter>
     </div>
   ) 
    

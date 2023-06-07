@@ -4,12 +4,12 @@ import { handlerPath } from '@libs/handler-resolver';
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
+  timeout:20,
   events: [
     {
       http: {
         method: 'get',
-        path: 'toptokens',
-        timeout:20
+        path: 'toptokens'
       },
     },
   ],

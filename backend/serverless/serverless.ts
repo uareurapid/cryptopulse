@@ -1,9 +1,9 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
-import top10Coins from '@functions/topcoins';
-import top10Holders from '@functions/topholders';
-import top50Tokens from '@functions/toptokens';
+import walletTokens from '@functions/wallettokens'; //get all ERC20 from a given wallet -> alchemy 
+import top10Coins from '@functions/topcoins'; // get the top 10 cryptos by market cap -> coinmarket cap
+import top10Holders from '@functions/topholders'; //get the top 10 holders of a given ERC20 token -> ethplorer
+import top50Tokens from '@functions/toptokens'; //get the top 50 ERC20 by activity in the last 30 days -> ethplorer
 
 const serverlessConfiguration: AWS = {
   service: 'serverless',
@@ -22,7 +22,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello, top10Coins, top10Holders, top50Tokens },
+  functions: { walletTokens, top10Coins, top10Holders, top50Tokens },
   package: { individually: true },
   custom: {
     esbuild: {

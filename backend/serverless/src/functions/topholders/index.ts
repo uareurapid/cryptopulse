@@ -13,6 +13,7 @@ const schema = {
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
+  timeout:20,
   events: [
     {
       http: {

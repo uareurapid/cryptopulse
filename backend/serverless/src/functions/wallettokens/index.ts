@@ -1,16 +1,24 @@
-import schema from './schema';
 import { handlerPath } from '@libs/handler-resolver';
+
+const requestSchema = {
+  type: "object",
+  properties: {
+    name: { type: 'address' }
+  },
+  required: ['address']
+};
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
+  timeout:20,
   events: [
     {
       http: {
-        method: 'get',
-        path: 'hello',
+        method: 'post',
+        path: 'wallettokens',
         request: {
           schemas: {
-            'application/json': schema,
+            'application/json': requestSchema,
           },
         },
       },

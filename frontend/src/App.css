@@ -53,3 +53,21 @@
 .ml-20 {
   margin-left: 20px;
 }
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+
+.link-button {
+  display: block;
+  background-color: lightgrey;
+  color: black;
+  margin: 0 auto;
+  text-align: center;
+  border: 2px solid #000;
+  border-radius: 3px;
+  padding: 3px;
+  text-decoration: none;
+  max-width: 120px;
+}

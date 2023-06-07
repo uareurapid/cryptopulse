@@ -15,13 +15,20 @@ export default function Top50Tokens() {
       console.log("top50 tokens", top50Tokens);
   }, []);
 
-    
+
+  if(!top50Tokens || !top50Tokens.length) {
     return (
-        <div>
-        {getListElements()}
-        </div>
+      <div>NO DATA!</div>
     )
+  } 
   
+  return (
+      <div>
+      {getListElements()}
+      </div>
+  )
+  
+    
 
   function getListElements() {
 
@@ -30,7 +37,7 @@ export default function Top50Tokens() {
         const src = `https://ethplorer.io${token.image}`;
         const tokenAddr = `https://etherscan.io/address/${token.address}`;
 
-        const link = `/Address?wallet=${token.address}`;
+        const link = `/Token?address=${token.address}`;
         return (
                 
           <div className="listTop50ActiveTokens">
@@ -52,11 +59,16 @@ export default function Top50Tokens() {
 
   async function getTop50Tokens() {
 
-    let response = await axios.get("http://localhost:3000/dev/toptokens");
-    console.log("on frontend response is: ",response);
-    if(response.data) {
-      setTop50Tokens(response.data);
+    try {
+      let response = await axios.get("http://localhost:3000/dev/toptokens");
+      console.log("on frontend response is: ",response);
+      if(response.data) {
+        setTop50Tokens(response.data);
+      }
+    }catch(ex) {
+      console.error(ex);
     }
+    
   } 
 
 }

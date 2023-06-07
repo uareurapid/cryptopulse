@@ -13,7 +13,11 @@ export default function Top10Cryptos() {
    },[]);
 
    if(!top10 || !top10.length) {
-    return <div></div>
+    return (
+        <div>
+            NO DATA!
+        </div>
+    )
    }
    return (
 
@@ -32,11 +36,17 @@ export default function Top10Cryptos() {
 
    async function getTop10CryptoRanking() {
     
+    try {
+        const url = "http://localhost:3000/dev/topcoins";
+        const rankingsData: any = await axios.get(url);
+        console.log("Top10 rankings: ", rankingsData);
+        setTop10(rankingsData.data.data);
+        
+    }catch(ex) {
+        console.error(ex);
+    }
 
-    const url = "http://localhost:3000/dev/topcoins";
-    const rankingsData: any = await axios.get(url);
-    console.log("Top10 rankings: ", rankingsData);
-    setTop10(rankingsData.data.data);
+    
     //setRankings(rankingsData);
 
    }

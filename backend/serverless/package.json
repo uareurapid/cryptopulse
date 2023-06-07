@@ -13,6 +13,7 @@
   "dependencies": {
     "@middy/core": "^3.4.0",
     "@middy/http-json-body-parser": "^3.4.0",
+    "alchemy-sdk": "^2.9.0",
     "axios": "^1.4.0"
   },
   "devDependencies": {
