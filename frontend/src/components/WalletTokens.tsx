@@ -5,15 +5,19 @@ import { AlchemyTokenBalance } from "../models/AlchemyTokenBalance";
 export default function WalletTokens(props: any) {
 
 
+    
+
     const [ERC20Tokens, setERC20Tokens] = useState([]);
 
     const walletAddress: string = props.wallet;
 
     const [selectedWallet, setSelectedWallet] = useState(walletAddress);
+
+    
     
     useEffect( ()=> {
 
-        if(selectedWallet) {
+        if(selectedWallet && selectedWallet.length) {
             getWalletERC20Tokens(walletAddress);
         }
         

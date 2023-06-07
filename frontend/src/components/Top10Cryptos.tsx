@@ -2,6 +2,33 @@
 import axios from "axios";
 import { CoinModel } from "../../../backend/serverless/src/models/CoinModel";
 import { useEffect, useState } from "react";
+import memoize from "lodash.memoize";
+import { invalidateCache } from "../utils/CommonUtils";
+
+
+async function getTop10CryptoRanking(): Promise <any> {
+    
+    try {
+        const url = "http://localhost:3000/dev/topcoins";
+        const rankingsData: any = await axios.get(url);
+        console.log("Top10 rankings: ", rankingsData);
+        //setTop10(rankingsData.data.data);
+        return rankingsData.data.data;
+        
+    }catch(ex) {
+        console.error(ex);
+        return [];
+    }
+    //setRankings(rankingsData);
+
+}
+
+const getData = memoize(getTop10CryptoRanking);
+
+//calls CommonUtils
+function invalidateTop50TokensCache() {
+  invalidateCache(getData);
+}
 
 export default function Top10Cryptos() {
 
@@ -9,7 +36,9 @@ export default function Top10Cryptos() {
 
    useEffect(() => {
 
-      getTop10CryptoRanking();
+      //getTop10CryptoRanking();
+      getData().then( (data) => setTop10(data));
+
    },[]);
 
    if(!top10 || !top10.length) {
@@ -34,22 +63,22 @@ export default function Top10Cryptos() {
     return list;
    }
 
-   async function getTop10CryptoRanking() {
+//    async function getTop10CryptoRanking() {
     
-    try {
-        const url = "http://localhost:3000/dev/topcoins";
-        const rankingsData: any = await axios.get(url);
-        console.log("Top10 rankings: ", rankingsData);
-        setTop10(rankingsData.data.data);
+//     try {
+//         const url = "http://localhost:3000/dev/topcoins";
+//         const rankingsData: any = await axios.get(url);
+//         console.log("Top10 rankings: ", rankingsData);
+//         setTop10(rankingsData.data.data);
         
-    }catch(ex) {
-        console.error(ex);
-    }
+//     }catch(ex) {
+//         console.error(ex);
+//     }
 
     
-    //setRankings(rankingsData);
+//     //setRankings(rankingsData);
 
-   }
+//    }
     // Function to display the rankings
 //   function displayRankings(rankings: any[]): void {
 //     console.log('Top 10 Cryptocurrencies by Market Cap:');

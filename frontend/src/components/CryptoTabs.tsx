@@ -6,6 +6,10 @@ import Box from '@mui/material/Box';
 import Top50Tokens from './Top50Tokens';
 import Top10Cryptos from './Top10Cryptos';
 import WalletTokens from './WalletTokens';
+import eventBus from "../utils/EventBus";
+import TokenTop10Holders from './TokenTop10Holders';
+import { useState } from 'react';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -24,10 +28,23 @@ const TABS_INDEX = {
 
 export default function CryptoTabs() {
 
+  const [reload50TokensCount, setReload50TokensCount] = useState(0);
 
-  const [reload50TokensCount, setReload50TokensCount] = React.useState(0);
+  const [selectedToken, setSelectedToken] = useState(null);
 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+
+  eventBus.on("top_wallets_for_token", (data: any) => {
+    console.log("got even dispatched: ", data.token);
+    if(data.token) {
+      
+      setValue(3);
+      setSelectedToken(data.token);
+    }
+
+  });
+
+  
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -86,7 +103,7 @@ export default function CryptoTabs() {
         <WalletTokens></WalletTokens>
       </TabPanel>
       <TabPanel value={value} index={3}>
-        TOP WALLETTS FOR TOKEN
+        <TokenTop10Holders address={selectedToken}></TokenTop10Holders>
       </TabPanel>
       <TabPanel value={value} index={4}>
         Following
