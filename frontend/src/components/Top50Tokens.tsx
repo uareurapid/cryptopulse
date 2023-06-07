@@ -5,14 +5,30 @@ import Top50TokenETHList from "./Top50TokenETHList";
 import '../css/top50.css'
 import { Link } from 'react-router-dom';
 
-export default function Top50Tokens() {
+//https://betterprogramming.pub/exploring-caching-techniques-in-react-d30bbb78d54d
+/*
+const MyMemoizedFunction = (age: any) => {
+  if(Cache.hasKey(age)) {
+    return cache.get(age);
+  }
+  const value = `You are ${age} years old!`;
+  cache.set(age, value);
+  return value;
+}*/
+
+
+export default function Top50Tokens(props: any) {
 
   const [top50Tokens, setTop50Tokens] = useState([]);
 
 
     useEffect( () => {
-      getTop50Tokens();
-      console.log("top50 tokens", top50Tokens);
+
+      if(props.reload) {
+        getTop50Tokens();
+        console.log("top50 tokens", top50Tokens);
+      }
+      
   }, []);
 
 

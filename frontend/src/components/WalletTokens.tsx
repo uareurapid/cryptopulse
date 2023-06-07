@@ -10,17 +10,17 @@ export default function WalletTokens(props: any) {
     const walletAddress: string = props.wallet;
 
     const [selectedWallet, setSelectedWallet] = useState(walletAddress);
-
-    console.log("will get erc20 tokens for wallet: ", walletAddress);
     
     useEffect( ()=> {
 
-        getWalletERC20Tokens(walletAddress);
-    },[selectedWallet]);
+        if(selectedWallet) {
+            getWalletERC20Tokens(walletAddress);
+        }
+        
+    },[]);
     
     async function getWalletERC20Tokens(walletAddress: string): Promise<any> {
 
-        console.log("CALLED?");
         let body = {
           address: walletAddress
         }
@@ -40,6 +40,13 @@ export default function WalletTokens(props: any) {
     }
 
     //layout
+
+    if(!selectedWallet) {
+        return (
+            <div>NO DATA/WALLET</div>
+        )
+    }
+
     return (
         <div>
             {getListElements()}
