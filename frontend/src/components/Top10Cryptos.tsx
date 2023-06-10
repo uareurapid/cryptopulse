@@ -37,7 +37,13 @@ export default function Top10Cryptos() {
    useEffect(() => {
 
       //getTop10CryptoRanking();
-      getData().then( (data) => setTop10(data));
+      getData().then( (data) =>  {
+        setTop10(data);
+        console.log("will dispatch event load-top-10 with data: ", data);
+        let ids: number[] = data.map((elem: any) => elem.id);
+        window.localStorage.setItem("top-10-ids", JSON.stringify(ids));
+        document.dispatchEvent(new CustomEvent('load-top-10', { detail: data }));
+      });
 
    },[]);
 
