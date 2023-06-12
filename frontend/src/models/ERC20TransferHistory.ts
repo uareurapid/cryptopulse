@@ -14,8 +14,6 @@ export type ERC20Transfers = {
     direction: string ;//ERC20TransferDirection
 }
 
-
-
 //the history is an array of transfers
 export type ERC20TransferHistory = {
 

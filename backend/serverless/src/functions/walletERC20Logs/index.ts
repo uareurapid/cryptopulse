@@ -9,7 +9,7 @@ export default {
     {
       http: {
         method: 'post',
-        path: 'walletlogs',
+        path: 'walleterc20logs',
        
         // request: {
         //   schemas: {

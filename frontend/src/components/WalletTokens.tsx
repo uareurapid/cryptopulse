@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AlchemyTokenBalance } from "../models/AlchemyTokenBalance";
+import { ERC20TransferDirection, ERC20TransferHistory, ERC20Transfers } from "../models/ERC20TransferHistory";
 
 
 const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_API_KEY as string;
 const baseURL = `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`;
-
+const MAX_TRANSACTIONS_TO_FETCH = 50;
 
 export default function WalletTokens(props: any) {
 
@@ -85,7 +86,7 @@ export default function WalletTokens(props: any) {
                 {
                   "fromBlock": block,
                   "fromAddress": wallet,
-                  "category": ["erc20"]
+                  "category": ["erc20"] //only track erc20 transfers for now
                 }
               ]
             });
@@ -102,15 +103,77 @@ export default function WalletTokens(props: any) {
           let response = await axios(axiosURL, requestOptions)
           console.log("Logs result: ");
           console.log(JSON.stringify(response.data, null, 2));
+
+
+          let history: ERC20TransferHistory = {
+            user_id: "paulo_cristo",
+            records: mapResults(response.data.result.transfers)
+          }
+
+
+          console.log("HISTORY FOR SERVER: ", history);
+
          
-            return {
-              statusCode: 200,
-              body: JSON.stringify(response.data),
-            };
+            
           }catch(ex) {
         
             console.error("got error", ex);
           }
+    }
+
+    function mapResults(data: any): ERC20Transfers[] {
+
+      let payload: any = data; 
+      //get only the last X elems (last ones are more recent)
+      if(data.length > MAX_TRANSACTIONS_TO_FETCH) {
+        payload = data.slice(-MAX_TRANSACTIONS_TO_FETCH);
+      }
+      let result: ERC20Transfers[] = payload.map( (elem: any) => {
+
+
+        /**
+         * export type ERC20Transfers = {
+          hash: string;
+          token_name: string;
+          token_address: string;
+          value: number;
+          block: number; //block to get the timestamp
+          direction: string ;//ERC20TransferDirection
+          }
+         */
+
+          let value: ERC20Transfers = {
+            hash: elem.hash,
+            token_name: elem.asset,
+            token_address: elem.rawContract.address,
+            value: elem.value,
+            block: elem.blockNum, //block to get the timestamp
+            direction: (walletAddress === elem.from) ? ERC20TransferDirection.DIRECTION_OUT : ERC20TransferDirection.DIRECTION_IN //ERC20TransferDirection
+          }
+
+          return value;
+        /**
+         * {
+        "blockNum": "0x1093513",
+        "uniqueId": "0x0c20e71fd0b4e9175eba7cfcf224e5650a0cc097fbbe0d9c780041c6b5b7de01:log:221",
+        "hash": "0x0c20e71fd0b4e9175eba7cfcf224e5650a0cc097fbbe0d9c780041c6b5b7de01",
+        "from": "0xb66f07d7bf1f048ea0600b3e6eb480eda951392a",
+        "to": "0x3a49fdeeabe2ef0d85b0eeaecaeaa883e1f5cd10",
+        "value": 13389.7824286699,
+        "erc721TokenId": null,
+        "erc1155Metadata": null,
+        "tokenId": null,
+        "asset": "LOVE",
+        "category": "erc20",
+        "rawContract": {
+          "value": "0x02d5dc8f30c47c710914",
+          "address": "0xb22c05cedbf879a661fcc566b5a759d005cf7b4c",
+          "decimal": "0x12"
+        }
+      },
+         */
+      })
+      return result;
     }
 
 }
