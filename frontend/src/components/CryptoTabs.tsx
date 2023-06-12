@@ -31,9 +31,8 @@ export default function CryptoTabs() {
   const [reload50TokensCount, setReload50TokensCount] = useState(0);
 
   const [selectedToken, setSelectedToken] = useState(null);
-
   const [value, setValue] = useState(0);
-
+ 
   eventBus.on("top_wallets_for_token", (data: any) => {
     console.log("got even dispatched: ", data.token);
     if(data.token) {
@@ -43,7 +42,6 @@ export default function CryptoTabs() {
     }
 
   });
-
   
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -83,6 +81,7 @@ export default function CryptoTabs() {
 
   const reload50Tokens: boolean = (reload50TokensCount === 0) ? true: false;
   return (
+    <div>
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
@@ -109,5 +108,6 @@ export default function CryptoTabs() {
         Following
       </TabPanel>
     </Box>
+    </div>
   );
 }

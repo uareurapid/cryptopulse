@@ -28,3 +28,9 @@
 .ml-30 {
     margin-left: 30px;
 }
+
+.abs-pos-50px {
+
+    position: absolute;
+    right: 50px;
+}

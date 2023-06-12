@@ -4,6 +4,7 @@ import { CoinModel } from "../../../backend/serverless/src/models/CoinModel";
 import { useEffect, useState } from "react";
 import memoize from "lodash.memoize";
 import { invalidateCache } from "../utils/CommonUtils";
+import eventBus from "../utils/EventBus";
 
 
 async function getTop10CryptoRanking(): Promise <any> {
@@ -40,9 +41,11 @@ export default function Top10Cryptos() {
       getData().then( (data) =>  {
         setTop10(data);
         console.log("will dispatch event load-top-10 with data: ", data);
-        let ids: number[] = data.map((elem: any) => elem.id);
-        window.localStorage.setItem("top-10-ids", JSON.stringify(ids));
-        document.dispatchEvent(new CustomEvent('load-top-10', { detail: data }));
+        //let ids: number[] = data.map((elem: any) => elem.id);
+        //let str = JSON.stringify(ids);
+        //console.log("will set: ", str);
+        window.localStorage.setItem("top-10-ids", JSON.stringify(data));
+        eventBus.dispatch('load-top-10', { message: "load top 10 cryptos", ids: data });
       });
 
    },[]);

@@ -1,5 +1,6 @@
 import FearAndGreedChart from "../components/FearAndGreedChart";
 import CryptoTabs from "../components/CryptoTabs";
+import PriceMarquee from "../components/PriceMarquee";
 
 export default function Home() {
   
@@ -14,8 +15,9 @@ export default function Home() {
             <div className="mt-20">
             <CryptoTabs></CryptoTabs>
               <hr/>
+              
             </div>
-       
+            <PriceMarquee></PriceMarquee>
         </div>
       );
 

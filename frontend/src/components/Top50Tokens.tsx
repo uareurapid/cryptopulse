@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ImageComponent from "./ImageComponent";
-import Top50TokenETHList from "./Top50TokenETHList";
 import '../css/top50.css'
 import { Link } from 'react-router-dom';
 
@@ -77,7 +76,7 @@ export default function Top50Tokens(props: any) {
             </div>
             <li className="li-no-style ml-30" key={token.address}><strong>{token.name}</strong> <a target="_blank" href={tokenAddr}>{token.address}</a></li>
             {/*<Link className="ml-20 link-button" to={link} >Top Holders</Link>*/}
-            <button onClick={()=>getTopHolders(token.address)} className="ml-20 link-button">Get Top Holders</button>
+            <button onClick={()=>getTopHolders(token.address)} className="ml-20 link-button abs-pos-50px">Get Top Holders</button>
           </div>
         )
 

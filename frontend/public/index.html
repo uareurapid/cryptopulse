@@ -25,67 +25,10 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>Crypto Pulse</title>
-    <script src="libs/jquery-3.7.0.min.js"></script>
-    <script type="text/javascript" src="https://files.coinmarketcap.com/static/widget/coinPriceBlock.js"></script>
-
-    <script>
-
-
-      function setupWidget( coinsData, element) {
-
-        let coins = JSON.parse(coinsData);
-        console.log("coins: ", coins)
-        let str = "";
-        for(let i = 0; i < coins.length; i++) {
-        str += coins[i];
-          if(i < coins.length-1) {
-            str+=",";
-          }
-        }
-        let html = '<div id="coinmarketcap-widget-coin-price-block" coins="' + str + '" currency="USD" theme="light" transparent="true" show-symbol-logo="true"></div>';
-        console.log("html:", html);
-        document.getElementById("widget-paceholder").innerHTML(html);
-        //element.html(html);
-       
-      }
-
-      $(document).ready(function() {
-
-        let element = $("#widget-paceholder");
-        let coins;
-        alert(element);
-        if(element) {
-          //if we have something on local storage set it right away
-          coins = window.localStorage.getItem("top-10-ids");
-          if(coins) {
-            setupWidget(coins, element);
-          } else {
-            //otherwise d the default 3: BTC, USDT, ETH
-            element.html('<div id="coinmarketcap-widget-coin-price-block" coins="1,1027,825" currency="USD" theme="light" transparent="true" show-symbol-logo="true"></div>');    
-          }
-
-          // jQuery methods go here...
-          document.addEventListener('load-top-10',  function(event) {
-              
-              console.log("got event: ", event.detail);
-
-                coins = window.localStorage.getItem("top-10-ids");
-                if(coins) {
-                  setupWidget(coins, element);
-                }
-            });
-        }
-
-      });
-      
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <div id="widget-placeholder">
-      <div id="coinmarketcap-widget-coin-price-block" coins="1,1027,825" currency="USD" theme="light" transparent="true" show-symbol-logo="true"></div>
-    </div>
     
     <!--
       This HTML file is a template.
