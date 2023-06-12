@@ -5,6 +5,7 @@ import { ERC20TransferHistory } from 'src/models/ERC20TransferHistory';
 
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY as string;
 import { DynamoDBClient, BatchExecuteStatementCommand } from "@aws-sdk/client-dynamodb";
+//https://www.npmjs.com/package/@aws-sdk/client-dynamodb
 
 const walletTransfers = async (event) => {
 
