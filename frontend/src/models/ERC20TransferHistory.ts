@@ -14,10 +14,15 @@ export type ERC20Transfers = {
     direction: string ;//ERC20TransferDirection
 }
 
+export type WalletTracking = {
+    user_id: string,
+    wallet: string;
+}
+
 //the history is an array of transfers
 export type ERC20TransferHistory = {
 
-    user_id: string; //the user doing the history tracking
+    data: WalletTracking; //the user doing the history tracking
     records: ERC20Transfers []
 }
 //https://www.npmjs.com/package/@aws-sdk/client-dynamodb

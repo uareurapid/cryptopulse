@@ -1,6 +1,8 @@
 //import CoinModel from '../../models/CoinModel';
 import { handlerPath } from '@libs/handler-resolver';
 
+//Start tracking a wallet (if not exists). It will track token transfers between this wallet and others
+//we will identify the transfers going IN or OUT
 
 export default {
   handler: `${handlerPath(__dirname)}/handler.main`,
@@ -9,7 +11,7 @@ export default {
     {
       http: {
         method: 'post',
-        path: 'walleterc20logs',
+        path: 'trackwallet',
        
         // request: {
         //   schemas: {

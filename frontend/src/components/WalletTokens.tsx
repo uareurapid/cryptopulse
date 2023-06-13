@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AlchemyTokenBalance } from "../models/AlchemyTokenBalance";
-import { ERC20TransferDirection, ERC20TransferHistory, ERC20Transfers } from "../models/ERC20TransferHistory";
+import { ERC20TransferDirection, ERC20TransferHistory, ERC20Transfers, WalletTracking } from "../models/ERC20TransferHistory";
 
 
 const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_API_KEY as string;
@@ -60,10 +60,34 @@ export default function WalletTokens(props: any) {
     return (
         <div>
             {getListElements()}
+            <button onClick={ () => startTrackingWallet()}>Start traking wallet token transfers</button>
             <button onClick={ () => loadHistory()}>Load Transfer History</button>
         </div>
     )
 
+
+//     //{
+//     "added": true,
+//     "data": {
+//         "user_id": "paulo_cristo",
+//         "wallet": "0x75e89d5979e4f6fba9f97c104c2f0afb3f1dcb88"
+//     }
+// }
+    async function startTrackingWallet() {
+      
+      let body: WalletTracking = {
+        user_id: "paulo_cristo", 
+        wallet: selectedWallet
+      };
+
+      try {
+        let response = await axios.post("http://localhost:3000/dev/trackwallet", body);
+        console.log("on frontend startTrackingWallet response is: ",response);
+    
+      }catch(ex) {
+        console.error('error on startTrackingWallet: ', ex);
+      }
+    }
 
     //no final do array estao os mais recentes, comecar para trás ir buscar apenas 50 transfers
     async function loadHistory() {
@@ -105,8 +129,9 @@ export default function WalletTokens(props: any) {
           console.log(JSON.stringify(response.data, null, 2));
 
 
+          let data: WalletTracking = {user_id: "paulo_cristo", wallet: selectedWallet};
           let history: ERC20TransferHistory = {
-            user_id: "paulo_cristo",
+            data: data,
             records: mapResults(response.data.result.transfers)
           }
 
