@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { AlchemyTokenBalance } from "../models/AlchemyTokenBalance";
-import { ERC20TransferDirection, ERC20TransferHistory, ERC20Transfers, WalletTracking } from "../models/ERC20TransferHistory";
+import { ERC20TransferDirection, ERC20TransferHistory, ERC20Transfers, WalletTrackingData, WalletTrackingPayload } from "../models/ERC20TransferHistory";
 
 
 const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_API_KEY as string;
@@ -74,14 +74,22 @@ export default function WalletTokens(props: any) {
 //     }
 // }
     async function startTrackingWallet() {
-      
-      let body: WalletTracking = {
-        user_id: "paulo_cristo", 
-        wallet: selectedWallet
-      };
+
+      //data about wallet and network (unique way to identify a wallet)
+      let walletData: WalletTrackingData = {
+        wallet: selectedWallet,
+        network: 'ethereum'
+      }
+      //POST request, with info about the user tracking this wallet
+      //if there are multiple users tracking the same wallet for the same network we do not need to repeat/duplicate the logs data
+      let payload: WalletTrackingPayload = {
+          user_id: 'paulo_cristo',
+          data: walletData
+      }
+ 
 
       try {
-        let response = await axios.post("http://localhost:3000/dev/trackwallet", body);
+        let response = await axios.post("http://localhost:3000/dev/trackwallet", payload);
         console.log("on frontend startTrackingWallet response is: ",response);
     
       }catch(ex) {
@@ -129,7 +137,17 @@ export default function WalletTokens(props: any) {
           console.log(JSON.stringify(response.data, null, 2));
 
 
-          let data: WalletTracking = {user_id: "paulo_cristo", wallet: selectedWallet};
+          let walletData: WalletTrackingData = {
+            wallet: selectedWallet,
+            network: 'ethereum'
+          };
+          let data: WalletTrackingPayload = {
+            user_id: "paulo_cristo", 
+            data: walletData
+          };
+
+          //will do everything in one call, start tracking the data and save the logs
+        
           let history: ERC20TransferHistory = {
             data: data,
             records: mapResults(response.data.result.transfers)
