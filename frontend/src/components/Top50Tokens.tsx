@@ -118,7 +118,7 @@ export default function Top50Tokens(props: any) {
     //signal main page and move tabs
     alert("get holders of token: " + tokenAddress);
 
-    eventBus.dispatch("top_wallets_for_token", { message: "get top holders", token: tokenAddress });
+    eventBus.dispatch(eventBus.EVENTS.GET_TOP_WALLETS_FOR_TOKEN, { message: "get top holders", token: tokenAddress });
 
   }
 

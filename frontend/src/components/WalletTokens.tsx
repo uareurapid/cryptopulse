@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { AlchemyTokenBalance } from "../models/AlchemyTokenBalance";
 import { ERC20TransferDirection, ERC20TransferHistory, ERC20Transfers, WalletTrackingData, WalletTrackingPayload } from "../models/ERC20TransferHistory";
 
+import eventBus from "../utils/EventBus";
 
 const ALCHEMY_API_KEY = process.env.REACT_APP_ALCHEMY_API_KEY as string;
 const baseURL = `https://eth-mainnet.g.alchemy.com/v2/${ALCHEMY_API_KEY}`;
@@ -91,6 +92,8 @@ export default function WalletTokens(props: any) {
       try {
         let response = await axios.post("http://localhost:3000/dev/trackwallet", payload);
         console.log("on frontend startTrackingWallet response is: ",response);
+
+        eventBus.dispatch(eventBus.EVENTS.START_TRACKING_WALLET, { message: "start tracking wallet", wallet: selectedWallet, network: "ethereum" });
     
       }catch(ex) {
         console.error('error on startTrackingWallet: ', ex);
