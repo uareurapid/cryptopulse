@@ -10,6 +10,13 @@ const eventBus = {
     remove(event: any, callback: any) {
       document.removeEventListener(event, callback);
     },
+
+
+    EVENTS: {
+        GET_TOP_WALLETS_FOR_TOKEN: "top_wallets_for_token",
+        START_TRACKING_TOKEN: "start_tracking_token",
+        START_TRACKING_WALLET: "start_tracking_wallet",
+    }
 };
 
 export default eventBus;

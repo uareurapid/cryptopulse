@@ -8,7 +8,7 @@ const ABI = require('src/utils/ERC20ABI');
 
 async function getTop50Tokens() {
   
-  let apiKey = process.env.ETHPLORER_KEY as string;
+  let apiKey = process.env.ETHPLORER_API_KEY as string;
   console.log("API KEY: " + apiKey);
   let response = await axios.get(`https://api.ethplorer.io/getTopTokens?apiKey=${apiKey}`);
   console.log(response);

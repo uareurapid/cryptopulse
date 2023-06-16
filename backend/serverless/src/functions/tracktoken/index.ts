@@ -8,8 +8,8 @@ export default {
   events: [
     {
       http: {
-        method: 'get',
-        path: 'topcoins',
+        method: 'post',
+        path: 'tracktoken',
        
         // request: {
         //   schemas: {

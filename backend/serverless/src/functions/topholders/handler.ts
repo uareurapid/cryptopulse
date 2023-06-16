@@ -46,7 +46,7 @@ const top10Holders = async (event) => {
  */
 
 async function getTopTokenHoldersERC20(addressToken: string): Promise<any> {
-  const apiKey: string = process.env.ETHPLORER_KEY as string;
+  const apiKey: string = process.env.ETHPLORER_API_KEY as string;
   let response = await axios.get(`https://api.ethplorer.io/getTopTokenHolders/${addressToken}?apiKey=${apiKey}`);
   console.log(response);
   if(response.data && response.data.holders) {

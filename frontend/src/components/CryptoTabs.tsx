@@ -9,6 +9,7 @@ import WalletTokens from './WalletTokens';
 import eventBus from "../utils/EventBus";
 import TokenTop10Holders from './TokenTop10Holders';
 import { useState } from 'react';
+import Following from './Following';
 
 
 interface TabPanelProps {
@@ -33,12 +34,22 @@ export default function CryptoTabs() {
   const [selectedToken, setSelectedToken] = useState(null);
   const [value, setValue] = useState(0);
  
-  eventBus.on("top_wallets_for_token", (data: any) => {
+  eventBus.on(eventBus.EVENTS.GET_TOP_WALLETS_FOR_TOKEN, (data: any) => {
     console.log("got even dispatched: ", data.token);
     if(data.token) {
       
       setValue(3);
       setSelectedToken(data.token);
+    }
+
+  });
+
+  eventBus.on(eventBus.EVENTS.START_TRACKING_WALLET, (data: any) => {
+    console.log("got even dispatched: ", eventBus.EVENTS.START_TRACKING_WALLET, " ", data.wallet, " ", data.network);
+    if(data.wallet && data.network) {
+      
+      setValue(4);
+      //setSelectedToken(data.token);
     }
 
   });
@@ -105,7 +116,7 @@ export default function CryptoTabs() {
         <TokenTop10Holders address={selectedToken}></TokenTop10Holders>
       </TabPanel>
       <TabPanel value={value} index={4}>
-        Following
+        <Following type="wallet"></Following>
       </TabPanel>
     </Box>
     </div>

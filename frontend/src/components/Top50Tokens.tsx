@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import memoize from "lodash.memoize";
 import { invalidateCache } from "../utils/CommonUtils";
 import eventBus from "../utils/EventBus";
+import { TokenTrackingData, TokenTrackingPayload } from "../models/TokenTrakingPayload";
 
 
 export async function getTop50TokensData(): Promise<any> {
@@ -77,6 +78,7 @@ export default function Top50Tokens(props: any) {
             <li className="li-no-style ml-30" key={token.address}><strong>{token.name}</strong> <a target="_blank" href={tokenAddr}>{token.address}</a></li>
             {/*<Link className="ml-20 link-button" to={link} >Top Holders</Link>*/}
             <button onClick={()=>getTopHolders(token.address)} className="ml-20 link-button abs-pos-50px">Get Top Holders</button>
+            <button onClick={()=> startTrackingToken(token.address)}>Start Tracking Token</button>
           </div>
         )
 
@@ -84,6 +86,32 @@ export default function Top50Tokens(props: any) {
 
     return list;
   }
+
+  //it should go the the following panel, which is splitted between tokens and wallets
+  async function startTrackingToken(tokenAddress: string) {
+
+    //data about wallet and network (unique way to identify a wallet)
+    let tokenData: TokenTrackingData = {
+      token: tokenAddress,
+      network: 'ethereum'
+    }
+    //POST request, with info about the user tracking this wallet
+    //if there are multiple users tracking the same wallet for the same network we do not need to repeat/duplicate the logs data
+    let payload: TokenTrackingPayload = {
+        user_id: 'paulo_cristo',
+        data: tokenData
+    }
+
+
+    try {
+      let response = await axios.post("http://localhost:3000/dev/tracktoken", payload);
+      console.log("on frontend startTrackingToken response is: ",response);
+  
+    }catch(ex) {
+      console.error('error on startTrackingToken: ', ex);
+    }
+  }
+
 
   async function getTopHolders(tokenAddress: string) {
 
