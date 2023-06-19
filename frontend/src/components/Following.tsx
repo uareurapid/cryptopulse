@@ -4,15 +4,56 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const FollowingTypes = {
     WALLET: "wallet",
     TOKEN: "token"
 }
+
+
+
 export default function Following(props: any) {
 
     const type: string = props.type || FollowingTypes.WALLET;
 
+    const [trackedTokens, setTrackedTokens] = useState([]);
+
+
+    async function getTrackedTokens (user_id: string) {
+    
+        let body = {
+            user_id: user_id
+        }
+        let response = await axios.post("http://localhost:3000/dev/get_tracked_tokens", body);
+        console.log(`on frontend get tracked tokens for user id ${user_id} response is: `,response);
+        if(response.status === 200 && response.data.tokens) {
+            setTrackedTokens(JSON.parse(response.data.tokens));
+        }
+          
+    }
+
+
+    useEffect(() => {
+
+        //getTrackedTokens("paulo_cristo");
+    },[])
+
+
+    function getList() {
+
+        if(!trackedTokens || !trackedTokens.length) {
+            return (
+                <div>NADA</div>
+            )
+        }
+
+        let list = trackedTokens.map( (token: any, i: number) => {
+            return <li className="li-no-style" key={i}>{i} {token.token} {token.network}</li>
+        })
+        return list;
+       }
 
     return (
         <div className="following-container">
@@ -28,10 +69,7 @@ export default function Following(props: any) {
                     <Typography>Wallets</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    OLA MUNDO
                     </AccordionDetails>
                 </Accordion>
                 </div>
@@ -47,10 +85,7 @@ export default function Following(props: any) {
                     <Typography>Tokens</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                    <Typography>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget.
-                    </Typography>
+                    {getList()}
                     </AccordionDetails>
                 </Accordion>
                 </div>
@@ -58,4 +93,5 @@ export default function Following(props: any) {
         </Grid>
         </div>
     )
+
 }

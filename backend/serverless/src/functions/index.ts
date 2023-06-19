@@ -5,4 +5,6 @@ export { default as walletTokens} from './wallettokens';
 export { default as trackWallet} from './trackwallet';
 export { default as trackToken} from './tracktoken';
 
+export { default as getTrackedTokens} from './gettrackedtokens';
+
 //https://blog.logrocket.com/building-serverless-app-typescript/

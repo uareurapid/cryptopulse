@@ -6,6 +6,7 @@ import top10Holders from '@functions/topholders'; //get the top 10 holders of a 
 import top50Tokens from '@functions/toptokens'; //get the top 50 ERC20 by activity in the last 30 days -> ethplorer
 import trackWallet from '@functions/trackwallet';
 import trackToken from '@functions/tracktoken';
+import getTrackedTokens from '@functions/gettrackedtokens';
 
 const serverlessConfiguration: AWS = {
   service: 'serverless',
@@ -24,7 +25,15 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { walletTokens, top10Coins, top10Holders, top50Tokens, trackWallet,trackToken },
+  functions: { 
+    walletTokens, //get wallet tokens
+    top10Coins,  //get top 10 coins by market cap
+    top10Holders, //get top 10 wallets/holders of a given token
+    top50Tokens, //top 50 tokens by volume/activity in the last 30 days
+    trackWallet, //start tracking a wallet
+    trackToken, //start tracking a token
+    getTrackedTokens//get list of tracked tokens
+  },
   package: { individually: true },
   custom: {
     esbuild: {

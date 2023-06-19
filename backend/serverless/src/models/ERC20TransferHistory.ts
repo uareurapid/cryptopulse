@@ -12,6 +12,7 @@ export type ERC20Transfers = {
     value: number;
     block: number; //block to get the timestamp
     direction: string ;//ERC20TransferDirection
+    timestamp: string;
 }
 
 //Each item of the WalletTrackingDBModel wallets array

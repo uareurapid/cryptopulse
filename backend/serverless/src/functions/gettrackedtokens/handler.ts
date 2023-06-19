@@ -1,25 +1,23 @@
 //import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
 //import { formatJSONResponse } from '@libs/api-gateway';
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
-import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from '@aws-sdk/lib-dynamodb';
+import { DynamoDBDocumentClient, GetCommand } from '@aws-sdk/lib-dynamodb';
 import { middyfy } from '@libs/lambda';
 import axios from 'axios';
-import { TokenTrackingData, TokenTrackingPayload } from 'src/models/TokenTrakingPayload';
 
 //might depend on subscription/account type
 const LIMIT_TRANSACTIONS = 50;
 
-const trackToken = async (event) => {
+
+const getTrackedTokens = async (event) => {
 
   try {
 
-    const payload: TokenTrackingPayload = event.body; //wallet to get logs for
+    const user_id: string = event.body.user_id; //user id, to know what he is tracking in terms of tokens
 
-    const token: string  = payload.data.token;
+    console.log("Will get tracked tokens for user id: ", user_id);
 
-    console.log("got token: ", token);
-
-    if(!token) {
+    if(!user_id) {
       return {
         statusCode: 400,
         body: "Invalid or missing parameters"
@@ -29,14 +27,14 @@ const trackToken = async (event) => {
     
  
 
-    console.log("Will start tracking wallet for wallet: ", payload);  
+    console.log("Will start getting info about tracked tokens for user id: ", user_id);  
     const client = new DynamoDBClient({ region: process.env.AWS_REGION as string});
     const docClient = DynamoDBDocumentClient.from(client);
 
     const getCommand = new GetCommand({
       TableName: "token-tracking",
       Key: {
-        user_id: payload.user_id, 
+        user_id: user_id, 
       },
     });
 
@@ -44,75 +42,29 @@ const trackToken = async (event) => {
     console.log('Get existing tracking data response', responseGet);
 
     let existsUserIdKey: boolean = responseGet.Item ? true: false;
-    let existsToken = false;
 
-    let existingItem: TokenTrackingData[];
+    //let existingItems: TokenTrackingData[];
 
     if(existsUserIdKey) {
-      existingItem = JSON.parse(responseGet.Item.tokens); //array of tokens: TokenTrackingData[]
-      //check if we are already tracking this wallet address for this very same network
-      //not that evm based chains can have equal address on different chains
-      existsToken = (existingItem.filter( (elem) => (elem.token === payload.data.token) && (elem.network === payload.data.network) ) ).length > 0;
-    }
-
-    if(existsToken) {
+      //existingItems = JSON.parse(responseGet.Item.tokens); //array of tokens: TokenTrackingData[]
       return {
         statusCode: 200,
         body: JSON.stringify(
           {
-            exists: existsToken, //indicates it exists
-            token: payload.data.token, //the same data that was sent in the request
-            network: payload.data.network
+            data: {
+              tokens: responseGet.Item.tokens
+            }
           })
       };
-    } else {
-
-      let command: any; 
-      console.log("Its an update");
-
-      let newItem: TokenTrackingData = { token: payload.data.token, network: payload.data.network};
-
-      //its an update instead
-      if(existsUserIdKey) {
-
-        let tokensData: TokenTrackingData[] = existingItem;
-        
-        tokensData.push(newItem);
-        
-        command = new UpdateCommand({
-          TableName: "token-tracking",
-          Key: {
-            user_id: payload.user_id
-          },
-          UpdateExpression: "set tokens = :tokens",
-          ExpressionAttributeValues: {
-            ":tokens": JSON.stringify(tokensData) ,
-          },
-          ReturnValues: "ALL_NEW" 
-          });
-
-      }
-      else {
-        //its a new item
-        //https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/example_dynamodb_BatchWriteItem_section.html
-        command = new PutCommand({
-          TableName: "token-tracking",
-          Item: {
-            user_id: payload.user_id,
-            tokens: JSON.stringify([newItem])  
-          },
-        });
-
-      }
-
-      const response = await docClient.send(command);
-        console.log('response:', response);
-
-        return {
-          statusCode: 200,
-          body: JSON.stringify({added: true, data: payload}),
-        };
     }
+      
+    return {
+        statusCode: 200,
+        body: {
+          data: {}
+        },
+    };
+    
 
     
 
@@ -188,5 +140,5 @@ async function getTokenHistory(addressToken: string): Promise<any> {
 
 // startEventListener().catch((error) => console.error(error));
 
-export const main = middyfy(trackToken);
+export const main = middyfy(getTrackedTokens);
 
