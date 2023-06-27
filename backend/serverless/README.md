@@ -93,3 +93,43 @@ The project code base is mainly located within the `src` folder. This folder is 
 ### Advanced usage
 
 Any tsconfig.json can be used, but if you do, set the environment variable `TS_NODE_CONFIG` for building the application, eg `TS_NODE_CONFIG=./tsconfig.app.json npx serverless webpack`
+
+
+### API Documentation
+
+https://github.com/EverexIO/Ethplorer/wiki/Ethplorer-API#get-last-token-operations
+
+API `/tracktoken` (dynamo DB)
+
+Start tracking a given token on a given network
+
+TODO //=> getTokenHistory (ethplorer)
+Returns a list of the last operations on a token.
+
+
+### ---------------------------------------------------------------
+API `/trackwallet` (dynamo DB)
+Start tracking a given wallet address on a given network
+
+
+### ---------------------------------------------------------------
+API `/topcoins` (coinmarket cap)
+Shows top 10 coins on coinmarket cap (by market cap)
+
+
+### ---------------------------------------------------------------
+API `/toptokens` => getTopTokens (ethplorer)
+Shows top 50 most active tokens for the last 30 days.
+
+### ---------------------------------------------------------------
+API `/topholders` => getTopTokenHolders (ethplorer)
+Returns information about addresses holding the most of a token.
+
+### ---------------------------------------------------------------
+API `/gettrackedtokens` (dynamo DB)
+Returns information about token addresses currently beeing tracked.
+
+
+### ---------------------------------------------------------------
+API `/wallettokens` (alchemy)
+Returns information about ERC20 tokens currently held on a given wallet
