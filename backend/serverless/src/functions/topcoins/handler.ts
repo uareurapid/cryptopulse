@@ -57,4 +57,4 @@ async function fetchCryptoRankings(): Promise<CoinModel[]> {
   return data;
 }
 
-export const main = middyfy(top10Coins);
+export const topCoins = middyfy(top10Coins);

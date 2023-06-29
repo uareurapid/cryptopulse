@@ -12,7 +12,7 @@ const schema = {
 
 
 export default {
-  handler: `${handlerPath(__dirname)}/handler.main`,
+  handler: `${handlerPath(__dirname)}/handler.topHolders`,
   timeout:20,
   events: [
     {

@@ -40,7 +40,7 @@ const top50Tokens = async (event) => {
 };
 
 
-export const main = middyfy(top50Tokens);
+export const topTokens = middyfy(top50Tokens);
 /**
  * Make sure to replace <INFURA_API_KEY> with your actual Infura API key and <TOKEN_ADDRESS> with the contract address of the ERC20 token you want to analyze.
 

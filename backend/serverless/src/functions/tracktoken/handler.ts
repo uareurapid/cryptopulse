@@ -9,7 +9,7 @@ import { TokenTrackingData, TokenTrackingPayload } from 'src/models/TokenTraking
 //might depend on subscription/account type
 const LIMIT_TRANSACTIONS = 50;
 
-const trackToken = async (event) => {
+const trackTokenFn = async (event) => {
 
   try {
 
@@ -188,5 +188,83 @@ async function getTokenHistory(addressToken: string): Promise<any> {
 
 // startEventListener().catch((error) => console.error(error));
 
-export const main = middyfy(trackToken);
+export const trackToken = middyfy(trackTokenFn);
 
+const getTrackedTokensFn = async(event) => {
+
+  try {
+
+    const user_id: string = event.body.user_id; //user id, to know what he is tracking in terms of tokens
+
+    console.log("Will get tracked tokens for user id: ", user_id);
+
+    if(!user_id) {
+      return {
+        statusCode: 400,
+        body: "Invalid or missing parameters"
+      }
+    }
+
+    
+ 
+
+    console.log("Will start getting info about tracked tokens for user id: ", user_id);  
+    const client = new DynamoDBClient({ region: process.env.AWS_REGION as string});
+    const docClient = DynamoDBDocumentClient.from(client);
+
+    const getCommand = new GetCommand({
+      TableName: "token-tracking",
+      Key: {
+        user_id: user_id, 
+      },
+    });
+
+    const responseGet = await docClient.send(getCommand);
+    console.log('Get existing tracking data response', responseGet);
+
+    let existsUserIdKey: boolean = responseGet.Item ? true: false;
+
+    //let existingItems: TokenTrackingData[];
+
+    if(existsUserIdKey) {
+      //existingItems = JSON.parse(responseGet.Item.tokens); //array of tokens: TokenTrackingData[]
+      return {
+        statusCode: 200,
+        body: JSON.stringify(
+          {
+            data: {
+              tokens: responseGet.Item.tokens
+            }
+          })
+      };
+    }
+      
+    return {
+        statusCode: 200,
+        body: {
+          data: {}
+        },
+    };
+    
+
+    
+
+    //TODO THIS IS FINE!!!!
+    // console.log("Getting history for token: ", token);
+    // let tokenOperations = await getTokenHistory(token);
+    // return {
+    //   statusCode: 200,
+    //   body: JSON.stringify(tokenOperations),
+    // };
+
+  }catch(ex) {
+
+    console.error("got error", ex);
+    return {
+      statusCode: 500,
+      body: ex.message,
+    }
+  }
+
+}
+export const getTrackedTokens = middyfy(getTrackedTokensFn);

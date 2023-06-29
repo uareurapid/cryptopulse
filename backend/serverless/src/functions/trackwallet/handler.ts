@@ -14,7 +14,7 @@ import { BatchWriteCommand, DynamoDBDocumentClient, GetCommand, PutCommand, Upda
 //https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/example_dynamodb_GetItem_section.html
 
 
-const trackWallet = async (event) => {
+const trackWalletFn = async (event) => {
 
   try {
 
@@ -135,7 +135,87 @@ const trackWallet = async (event) => {
   
 };
 
-export const main = middyfy(trackWallet);
+export const trackWallet = middyfy(trackWalletFn);
+
+const getTrackedWalletsFn = async(event) => {
+
+  try {
+
+    const user_id: string = event.body.user_id; //user id, to know what he is tracking in terms of tokens
+
+    console.log("Will get tracked tokens for user id: ", user_id);
+
+    if(!user_id) {
+      return {
+        statusCode: 400,
+        body: "Invalid or missing parameters"
+      }
+    }
+
+    
+ 
+
+    console.log("Will start getting info about tracked wallets for user id: ", user_id);  
+    const client = new DynamoDBClient({ region: process.env.AWS_REGION as string});
+    const docClient = DynamoDBDocumentClient.from(client);
+
+    const getCommand = new GetCommand({
+      TableName: "wallet-tracking",
+      Key: {
+        user_id: user_id, 
+      },
+    });
+
+    const responseGet = await docClient.send(getCommand);
+    console.log('Get existing tracking data response', responseGet);
+
+    let existsUserIdKey: boolean = responseGet.Item ? true: false;
+
+    //let existingItems: TokenTrackingData[];
+
+    if(existsUserIdKey) {
+      //existingItems = JSON.parse(responseGet.Item.tokens); //array of tokens: TokenTrackingData[]
+      return {
+        statusCode: 200,
+        body: JSON.stringify(
+          {
+            data: {
+              wallets: responseGet.Item.wallets
+            }
+          })
+      };
+    }
+      
+    return {
+        statusCode: 200,
+        body: {
+          data: {}
+        },
+    };
+    
+
+    
+
+    //TODO THIS IS FINE!!!!
+    // console.log("Getting history for token: ", token);
+    // let tokenOperations = await getTokenHistory(token);
+    // return {
+    //   statusCode: 200,
+    //   body: JSON.stringify(tokenOperations),
+    // };
+
+  }catch(ex) {
+
+    console.error("got error", ex);
+    return {
+      statusCode: 500,
+      body: ex.message,
+    }
+  }
+}
+
+export const getTrackedWallets = middyfy(getTrackedWalletsFn);
+
 // Get existing tracking data response {
 //   '$metadata': {
 //     httpStatusCode: 200,

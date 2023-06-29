@@ -95,7 +95,7 @@ async function getTopTokenHoldersERC721() {
   return top10Holders;
 }
 
-export const main = middyfy(top10Holders);
+export const topHolders = middyfy(top10Holders);
 /**
  * Make sure to replace <INFURA_API_KEY> with your actual Infura API key and <TOKEN_ADDRESS> with the contract address of the ERC20 token you want to analyze.
 
