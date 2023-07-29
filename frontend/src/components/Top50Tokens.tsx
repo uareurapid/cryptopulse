@@ -75,10 +75,13 @@ export default function Top50Tokens(props: any) {
             <div className="listTop50ActiveTokens-container">
             <ImageComponent imageURL={src} cssClass="listTop50ActiveTokens-img"/>
             </div>
+            <div className="token_addr_link">
             <li className="li-no-style ml-30" key={token.address}><strong>{token.name}</strong> <a target="_blank" href={tokenAddr}>{token.address}</a></li>
+            </div>
+            
             {/*<Link className="ml-20 link-button" to={link} >Top Holders</Link>*/}
-            <button onClick={()=>getTopHolders(token.address)} className="ml-20 link-button abs-pos-50px">Get Top Holders</button>
-            <button onClick={()=> startTrackingToken(token.address)}>Start Tracking Token</button>
+            <button className="ml-30 btn-150" onClick={()=>getTopHolders(token.address)}>Get Top Holders</button>
+            <button className="ml-30 btn-150" onClick={()=> startTrackingToken(token.address)}>Start Tracking Token</button>
           </div>
         )
 

@@ -67,7 +67,7 @@ export default function Top10Cryptos() {
 
    function getList() {
     let list = top10.map( function(crypto: any, i: number) {
-        return <li className="li-no-style" key={i}>{i} {crypto.name} {crypto.symbol}: {crypto.quote.USD.market_cap} USD</li>
+        return <li className="li-no-style" key={i}>{i+1} - {crypto.name} - {crypto.symbol}: {crypto.quote.USD.market_cap} USD</li>
     })
     return list;
    }

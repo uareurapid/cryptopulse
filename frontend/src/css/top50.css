@@ -9,6 +9,15 @@
     position: relative;
 }
 
+.token_addr_link {
+    max-width: 400px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.btn-150 {
+    width: 150px;
+}
 
 .listTop50ActiveTokens-img {
 
@@ -19,7 +28,7 @@
 .listTop50ActiveTokens-container .listTop50ActiveTokens-img{
    position: absolute;
    left: 0%;
-   top: 50%;
+   top: 65%;
    transform: translate(-50%, -50%);
    margin-left: 10px;
 }

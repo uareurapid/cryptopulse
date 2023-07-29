@@ -11,11 +11,16 @@ export default function PriceMarquee() {
 
 
     let initialIds: any[] = [];
-    let saveIds = window.localStorage.getItem("top-10-ids");
+    let saveIds: any = window.localStorage.getItem("top-10-ids");
     if(saveIds) {
-        let savedData = JSON.parse(saveIds);
-        console.log("Initial ids are: ", savedData);
-        initialIds = savedData;
+        try {
+            let savedData = JSON.parse(saveIds);
+            console.log("Initial ids are: ", savedData);
+            initialIds = savedData;
+        }catch(err) {
+            console.error(err);
+        }
+        
     }
 
     const [coinIds, setCoinIds] = useState(initialIds);
@@ -41,7 +46,7 @@ export default function PriceMarquee() {
         <div>
             
             <div style={{ height: "200px" }}>
-            <Marquee duration={100000} reverse={reverse} background="#fafafa" height="250px">
+            <Marquee duration={100000} reverse={reverse} background="wheat" height="250px">
                 {getListElements()}
             </Marquee>
         </div>
@@ -60,10 +65,11 @@ export default function PriceMarquee() {
             console.log(symbol, price, change24h);
             return (
     
-             
                 <div key={`child2-${elem.id}`} className="marquee-box">
+                   <br/>
                    <div>{symbol} {price} USD</div> 
-                   <div style={{color: getColor(changeAsNum)}}>24h: {change24h}</div>
+                   <br/>
+                   <div>24h: <span style={{color: getColor(changeAsNum)}}>{change24h} {printArrow(changeAsNum)}</span></div>
                 </div>
             
               
@@ -73,6 +79,18 @@ export default function PriceMarquee() {
         return list;
         
      
+    }
+
+    function printArrow(changeAsNum: number) {
+        if(changeAsNum > 0) {
+            return (
+                <span>&uarr;</span>
+            )
+        }
+            
+        return (
+            <span>&darr;</span>
+        )
     }
 
     function getColor(num: number): string {

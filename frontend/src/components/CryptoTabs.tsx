@@ -96,18 +96,18 @@ export default function CryptoTabs() {
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Top 50 ETH tokens" {...a11yProps(0)} />
-          <Tab label="Top 10 Coins (by market cap)" {...a11yProps(1)} />
+        <Tab label="Top 10 Coins (by market cap)" {...a11yProps(0)} />
+          <Tab label="Top 50 ETH tokens" {...a11yProps(1)} />
           <Tab label="Wallet Token Holdings" {...a11yProps(2)} />
           <Tab label="Top Wallets for Token" {...a11yProps(3)} />
           <Tab label="Following" {...a11yProps(4)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <Top50Tokens reload={reload50Tokens}></Top50Tokens>
+        <Top10Cryptos></Top10Cryptos>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Top10Cryptos></Top10Cryptos>
+        <Top50Tokens reload={reload50Tokens}></Top50Tokens>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <WalletTokens></WalletTokens>
