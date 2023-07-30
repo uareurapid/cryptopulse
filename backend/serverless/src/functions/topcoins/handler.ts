@@ -48,6 +48,32 @@ async function fetchTop10CryptosFromCoinmarketcap(): Promise<any> {
   }
 }
 
+async function fetchCryptoInfo(allSlugs: string[]): Promise<any> {
+
+  try {
+  
+    console.log("will fetchCryptoInfo from ", allSlugs);  
+    let slugs = allSlugs.join(',');
+    console.log("comma separated: ", slugs);
+    console.log("api key: ", process.env.REACT_APP_COINMARKET_API_KEY);
+    let url = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?slug=${slugs}`;
+    const response: any = await axios.get(url, {
+      headers: {
+        'X-CMC_PRO_API_KEY': process.env.COINMARKET_API_KEY
+      },
+    });
+
+    console.log("coinmarketcap info: reponse",response);
+
+    if(response) {
+      return response.data;
+    }
+  }catch(ex) {
+    console.log("coinmarketcap: reponse",[]);
+    return [];
+  }
+}
+
 // Function to fetch the top cryptocurrencies by market cap
 async function fetchCryptoRankings(): Promise<CoinModel[]> {
   console.log("get top 10 coins...");

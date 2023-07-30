@@ -60,8 +60,10 @@ export default function PriceMarquee() {
             const symbol = elem.symbol;
             const price = Number(elem.quote.USD.price).toFixed(2);
     
-            const changeAsNum: number =  Number(elem.quote.USD.percent_change_24h);
-            const change24h = changeAsNum.toFixed(2)  + ' %';
+            const change24hAsNum: number =  Number(elem.quote.USD.percent_change_24h);
+            const change24h = change24hAsNum.toFixed(2)  + ' %';
+            const change7DayAsNum: number =  Number(elem.quote.USD.percent_change_7d);
+            const change7Day = change7DayAsNum.toFixed(2)  + ' %';
             console.log(symbol, price, change24h);
             return (
     
@@ -69,7 +71,9 @@ export default function PriceMarquee() {
                    <br/>
                    <div>{symbol} {price} USD</div> 
                    <br/>
-                   <div>24h: <span style={{color: getColor(changeAsNum)}}>{change24h} {printArrow(changeAsNum)}</span></div>
+                   <div>24h: <span style={{color: getColor(change24hAsNum)}}>{change24h} {printArrow(change24hAsNum)}</span></div>
+                   <br/>
+                   <div>7d: <span style={{color: getColor(change7DayAsNum)}}>{change7Day} {printArrow(change7DayAsNum)}</span></div>
                 </div>
             
               

@@ -40,6 +40,10 @@ export default function Top10Cryptos() {
       //getTop10CryptoRanking();
       getData().then( (data) =>  {
         setTop10(data);
+
+
+        fetchCryptoInfo(getAllSlugs(data));
+
         console.log("will dispatch event load-top-10 with data: ", data);
         //let ids: number[] = data.map((elem: any) => elem.id);
         //let str = JSON.stringify(ids);
@@ -65,12 +69,50 @@ export default function Top10Cryptos() {
     
    )
 
+   function getAllSlugs(data: any): string[] {
+    console.log("will get all slugs");
+    let listOfSlugs: string [] = [];
+    data.forEach( (coin: any) => {
+        console.log("COIN DATA IS: ", coin);
+        listOfSlugs.push(coin.slug); 
+    });
+    console.log("list of symbols is: ", listOfSlugs);
+    return listOfSlugs;
+   }
+
    function getList() {
     let list = top10.map( function(crypto: any, i: number) {
         return <li className="li-no-style" key={i}>{i+1} - {crypto.name} - {crypto.symbol}: {crypto.quote.USD.market_cap} USD</li>
     })
     return list;
    }
+
+   async function fetchCryptoInfo(allSlugs: string[]): Promise<any> {
+
+    try {
+    
+      console.log("will fetchCryptoInfo from ", allSlugs);  
+      let slugs = allSlugs.join(',');
+      console.log("comma separated: ", slugs);
+      console.log("api key: ", process.env.REACT_APP_COINMARKET_API_KEY);
+      let url = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?slug=${slugs}`;
+      const response: any = await axios.get(url, {
+        headers: {
+          'X-CMC_PRO_API_KEY': process.env.REACT_APP_COINMARKET_API_KEY,
+          'Access-Control-Allow-Origin': "*"
+        },
+      });
+  
+      console.log("coinmarketcap info: reponse",response);
+  
+      if(response) {
+        return response.data;
+      }
+    }catch(ex) {
+      console.log("coinmarketcap: reponse",[]);
+      return [];
+    }
+  }
 
 //    async function getTop10CryptoRanking() {
     
