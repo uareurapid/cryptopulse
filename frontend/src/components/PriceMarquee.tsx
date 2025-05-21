@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import TokenTop10Holders from './TokenTop10Holders';
+import TokenTop10Holders from './tokens/TokenTop10Holders';
 import eventBus from "../utils/EventBus";
 import Marquee from "react-easy-marquee";
 
 import '../css/marquee.css';
+import { TOP_10_IDS } from '../utils/Constants';
 
 //https://github.com/jagnani73/react-easy-marquee
 //https://jagnani73.github.io/react-easy-marquee/
@@ -11,21 +12,22 @@ export default function PriceMarquee() {
 
 
     let initialIds: any[] = [];
-    let saveIds: any = window.localStorage.getItem("top-10-ids");
+    let saveIds = window.localStorage.getItem(TOP_10_IDS);//top 10 cryptos ids, on marketcap
+    console.log('saved ids: ', saveIds)
     if(saveIds) {
         try {
             let savedData = JSON.parse(saveIds);
             console.log("Initial ids are: ", savedData);
             initialIds = savedData;
-        }catch(err) {
-            console.error(err);
+        }catch(error) {
+            console.log('error parsing: ', error)
         }
         
     }
 
     const [coinIds, setCoinIds] = useState(initialIds);
 
-    eventBus.on("load-top-10", (data: any) => {
+    eventBus.on(eventBus.EVENTS.LOAD_TOP_10_COINMARKET, (data: any) => {
         console.log("got even dispatched: ", data.ids);
         if(data.ids) {
           
@@ -43,13 +45,10 @@ export default function PriceMarquee() {
     const reverse = true;
 
     return(
-        <div>
-            
-            <div style={{ height: "200px" }}>
-            <Marquee duration={100000} reverse={reverse} background="wheat" height="250px">
+        <div>  
+            <Marquee duration={100000} reverse={reverse} background="transparent" height="180px">
                 {getListElements()}
             </Marquee>
-        </div>
         </div>
         
     )
@@ -68,12 +67,12 @@ export default function PriceMarquee() {
             return (
     
                 <div key={`child2-${elem.id}`} className="marquee-box">
+                   <p><div className='symbolTicker'>{symbol}</div> 
                    <br/>
-                   <div>{symbol} {price} USD</div> 
+                   <div style={{color: getColor(changeAsNum)}}> {price} $USD</div>
                    <br/>
-                   <div>24h: <span style={{color: getColor(change24hAsNum)}}>{change24h} {printArrow(change24hAsNum)}</span></div>
-                   <br/>
-                   <div>7d: <span style={{color: getColor(change7DayAsNum)}}>{change7Day} {printArrow(change7DayAsNum)}</span></div>
+                   <div style={{color: getColor(changeAsNum)}}>24h: {change24h}</div>
+                   </p>
                 </div>
             
               

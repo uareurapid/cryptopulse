@@ -16,6 +16,7 @@ const eventBus = {
         GET_TOP_WALLETS_FOR_TOKEN: "top_wallets_for_token",
         START_TRACKING_TOKEN: "start_tracking_token",
         START_TRACKING_WALLET: "start_tracking_wallet",
+        LOAD_TOP_10_COINMARKET: "load_top_10_cm" // top 10 marketcap rank
     }
 };
 

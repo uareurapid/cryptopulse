@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import WalletTokens from "../components/WalletTokens";
+import WalletTokens from "../components/wallets/WalletTokens";
 
 import '../css/token.css';
 
@@ -35,7 +35,7 @@ export default function Token() {
     useEffect( ()=> {
 
         getTokenTopHolders(tokenAddress);
-    },[]);
+    },[tokenAddress]);
 
     return (
         <div>

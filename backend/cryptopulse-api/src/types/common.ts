@@ -1,0 +1,98 @@
+
+import { ERC20Transfers } from "../models/ERC20TransferHistory.js"
+
+export interface ConnectionStatus {
+    ready: boolean
+    error?: string
+}
+
+export interface SupportedNetwork {
+    chainName: string
+    chainId: number
+}
+
+export interface RPCDetails {
+    network: SupportedNetwork
+    rpc: string
+    chunkSize?: number
+    startBlock?: number
+    fallbackRPCs?: string[]
+}
+
+export interface BlocksEvents {
+    [event: string]: any
+  }
+  
+// either we are processing events for a wallet of of a token  
+export interface ProcessingEvents {
+    lastBlock: number
+    wallet?: string
+    token?:string
+    foundTransactions: ERC20Transfers[]
+}
+
+export interface NetworkEvent {
+    type: string
+    text: string
+    hash: string
+}
+
+// simplified
+export interface BlockchainLogs {
+   
+    transactionHash: string,
+    blockHash: string,
+    blockNumber: number,
+    removed: boolean,
+    address: string,
+    data: string,
+    topics: string[],
+    index: number,
+    transactionIndex: number
+}
+
+export interface RPC {
+    default: string
+    fallback?: string[]
+}
+
+
+/**
+ * Log {
+    provider: JsonRpcProvider { networkAvailable: true },
+    transactionHash: '0xb3fa6655717101ba052f3a85b2153c7d9ae2916960fc757c92b7e94242f405c4',
+    blockHash: '0xb4fe474abfeceef092479426a518230e1933799d5c808d1f4aca941bc3a4a7bc',
+    blockNumber: 22210885,
+    removed: false,
+    address: '0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3',
+    data: '0x000000000000000000000000000000000000000000000001158e460913d00000',
+    topics: [
+      '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef',
+      '0x0000000000000000000000004f13483b39593f6ac4b7a190d35ea992652bbd40',
+      '0x000000000000000000000000194a88fa9ab9fcdcd82f607d8cf5de7eaea44efe'
+    ],
+    index: 194,
+    transactionIndex: 89
+ */
+
+    /**
+     * final data:  TransactionReceipt {
+  provider: JsonRpcProvider { networkAvailable: true },
+  to: '0x3328F7f4A1D1C57c35df56bBf0c9dCAFCA309C49',
+  from: '0x1379B0BbcEE925c2C843cD39aC7F1820bB603E4d',
+  contractAddress: null,
+  hash: '0x9bd368e62bc8b948a943e463c961e73c6e30c0bc436ff2e9fa79425241989227',
+  index: 0,
+  blockHash: '0x92df4ebe3d3d13bb08b14e3c65995e65b358546ac6cf7d182e2620705e6e8a96',
+  blockNumber: 22210939,
+  logsBloom: '0x00200000000000000000000080000080000000000000000000000400000000400000040000000000000000000000000002000000080000300000200000001000000000000000000000000008200000200000000000000000000000008004000000000000000000000000000000000400600000000000000000000010000000000000000000000000000020004000000000000001002000080000004000000000000000000000000002001000000000080000000000000000040000000000000000000002000000000000000000000040000000000000001000000000000000000000200000000008000000000000000000080008000000400000000000000000',
+  gasUsed: 183000n,
+  blobGasUsed: null,
+  cumulativeGasUsed: 183000n,
+  gasPrice: 70483140096n,
+  blobGasPrice: null,
+  type: 2,
+  status: 1,
+  root: undefined
+}
+     */

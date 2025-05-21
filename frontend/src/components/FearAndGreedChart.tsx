@@ -3,13 +3,16 @@ import { useEffect, useState } from "react";
 import GaugeChart from 'react-gauge-chart';
 import { getScore } from '../models/FearAndGreedModel';
 
+import styles from '../pages/pages.module.css'
 const chartStyle = {
-    height: '250px',
-    with: '200px',
+    height: '70px',
+    width: '85%',
+    margin: '0 auto'
 }
 
 const legendStyle = {
-  paddingTop: '-120px',
+  paddingTop: '20px',
+  fontWeight: 'bold'
 }
 export default function  FearAndGreedChart() {
 
@@ -23,10 +26,14 @@ export default function  FearAndGreedChart() {
     }, [fearAndGreedIndex]);
 
     return (
-      <div>
-        <GaugeChart nrOfLevels={20} arcWidth={0.3} textColor='#000' percent={fearAndGreedIndex} style={chartStyle}></GaugeChart>
-        <div style={legendStyle}>{fearAndGreedIndex*100} - {getScore(fearAndGreedIndex)}</div>
+      <div className="chart-container">
+            <div className="chart-title"><span>Bitcoin Fear & Greed index</span></div>
+            <div>
+            <GaugeChart className={styles.svgFearGreed} nrOfLevels={20} arcWidth={0.3} textColor='#fff' percent={fearAndGreedIndex/100} style={chartStyle}></GaugeChart>
+            <div style={legendStyle}>{fearAndGreedIndex} - {getScore(fearAndGreedIndex)}</div>
+          </div>
       </div>
+      
     )
 
 
@@ -44,8 +51,12 @@ export default function  FearAndGreedChart() {
             let data = [];
             data = jsonData.data;
             if(data && data.length > 0) {
-              console.log("set value fear greed to",data[0].value);
-              setFearAndGreedIndex(Number(data[0].value/100));
+              let value = Number(data[0].value)
+              if(value > 100 ) {
+                value = value/100
+              }
+              console.log("set value fear greed to",value);
+              setFearAndGreedIndex(value);//data[0].value/100
             }
           }
         }

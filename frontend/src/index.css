@@ -5,7 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: wheat;
+  background: rgb(0,0,0);
+
+background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(31,31,42,1) 35%, rgba(4,30,34,1) 100%);
 }
 
 code {
@@ -21,8 +23,16 @@ code {
 
 
 .chart-container {
-  width: 400px; height:280px;
+  width: 100px; height:140px;
+  text-align: center;
   margin: 0 auto;
+  display:contents;
+  padding-bottom: 10px;
+}
+
+.chart-title {
+ padding-bottom: 15px;
+ font-weight: 600;
 }
 
 .mywidget {

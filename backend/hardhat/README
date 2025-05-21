@@ -1,0 +1,8 @@
+to compile
+npx hardhat compile
+to test
+npx hardhat test
+to deploy
+npx hardhat run scripts/deploy.js --network <chain_name>
+
+

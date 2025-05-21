@@ -3,13 +3,13 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Top50Tokens from './Top50Tokens';
-import Top10Cryptos from './Top10Cryptos';
-import WalletTokens from './WalletTokens';
+import Top50Tokens from '../pages/top50tokens';
+import Top10Cryptos from '../pages/top10cryptos';
+import WalletTokens from './wallets/WalletTokens';
 import eventBus from "../utils/EventBus";
-import TokenTop10Holders from './TokenTop10Holders';
+import TokenTop10Holders from './tokens/TokenTop10Holders';
 import { useState } from 'react';
-import Following from './Following';
+import Following from './tokens/FollowingTokens';
 
 
 interface TabPanelProps {

@@ -2,3 +2,8 @@
 backend/artifacts
 backend/node_modules
 node_modules
+backend/cryptopulse-api/logs/
+backend/cryptopulse-api/.env*
+backend/cryptopulse-api/dist/
+
+

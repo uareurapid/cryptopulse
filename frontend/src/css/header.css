@@ -1,0 +1,8 @@
+/* Header Styling */
+.header {
+    background-color: transparent;/* #2c3e50*/;
+    color: #fff;
+    /*padding: 10px;*/
+    text-align: center;
+    font-size: 1.5rem;
+}

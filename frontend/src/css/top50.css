@@ -3,21 +3,15 @@
     flex-direction: row;
     margin: 0 auto;
     padding-top: 24px;
+    color: antiquewhite;
+    padding-left: 40px;
 }
 
 .listTop50ActiveTokens-container {
     position: relative;
+    display: block;
 }
 
-.token_addr_link {
-    max-width: 400px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.btn-150 {
-    width: 150px;
-}
 
 .listTop50ActiveTokens-img {
 
@@ -27,19 +21,26 @@
 
 .listTop50ActiveTokens-container .listTop50ActiveTokens-img{
    position: absolute;
-   left: 0%;
-   top: 65%;
+   left: 10%;
+   top: 55%;
    transform: translate(-50%, -50%);
    margin-left: 10px;
 }
 
+.token_50_list_container {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 5px 10px 10px;
+}
 
 .ml-30 {
     margin-left: 30px;
 }
 
-.abs-pos-50px {
-
-    position: absolute;
-    right: 50px;
+.button_top_50_tokens {
+    margin-left: 15px;
+}
+.top_50_tokens_link {
+    display: block;
+    width: 70%;
 }

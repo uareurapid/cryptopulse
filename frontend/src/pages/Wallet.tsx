@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import WalletTokens from "../components/WalletTokens";
+import WalletTokens from "../components/wallets/WalletTokens";
 
 //const ETHERSCAN_API_URL = "https://api.etherscan.io/";
 //const api_key = "IAWMMS1HSVZZA61T5V8ZMX8XGN78Q9FUK2";
