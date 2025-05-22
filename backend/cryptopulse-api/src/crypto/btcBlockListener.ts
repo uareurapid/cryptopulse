@@ -134,3 +134,4 @@ do not read sender addresses from vin.
 Treat output addresses as the recipients of the newly minted BTC.
 
 Log that it's a coinbase transaction (for clarity and auditing).
+*/

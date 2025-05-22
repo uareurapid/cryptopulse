@@ -6,7 +6,9 @@ export const DB_URL = process.env.DB_URL || 'http://localhost:8000'
 export const DEVELOPMENT_CHAIN_ID = 8996
 export const SUPPORTED_NETWORKS = {
     ETHEREUM: {chain_name: 'ethereum', chain_id: 1},
-    DEVELOPMENT: {chain_name: 'development', chain_id: DEVELOPMENT_CHAIN_ID}
+    DEVELOPMENT: {chain_name: 'development', chain_id: DEVELOPMENT_CHAIN_ID},
+    // most stuff will not apply to btc chain
+    BITCOIN: {chain_name: 'bitcoin', chain_id: 0}
 }
 
 export const DEFAULT_RPC_PROVIDERS: Record<string, RPC> =  {

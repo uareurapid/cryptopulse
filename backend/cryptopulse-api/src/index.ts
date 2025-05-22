@@ -12,6 +12,7 @@ import { startListeningTokens, startListeningWallets } from './crypto/blockchain
 import { chainsRoutes } from './chains/index.js';
 import { CryptoPulseDatabase, TABLES } from './db/database.js';
 import { listenBTCNewBlocks } from './crypto/btcBlockListener.js';
+import { isSupportedNetwork } from './utils/util.js';
 
 dotenv.config();
 
@@ -57,3 +58,7 @@ console.log('database: ', database)
 // startListeningWallets('paulo_cristo')
 startListeningTokens('paulo_cristo')
 listenBTCNewBlocks()
+
+
+
+
