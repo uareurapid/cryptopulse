@@ -38,6 +38,7 @@ import { getDefaultChunkSize, getStartBlockFromNetworkHeight, isDefined, isSuppo
 import { startListeningSingleWallet } from '../crypto/blockchainTracking.js';
 import EventEmitter from 'node:events';
 import { getExistingWallet, getTrackedWallets, updateOrCreateWalletTracking, updateWalletLabel } from './service.js';
+import { isAddress } from 'ethers';
 
 
 //might depend on subscription/account type
@@ -301,6 +302,9 @@ walletsRoutes.post(
      */
 
   const payload: WalletEntity = req.body as WalletEntity; //wallet to get logs for
+  if(!payload.wallet || !isAddress(payload.wallet)) {
+    res.status(400).send('Missing or invalid paramaters!')
+  }
   const walletData = await getExistingWallet(payload.user_id,payload.wallet,payload.network)
   if(!walletData) {
     res.status(404).send('That wallet does not exist!')

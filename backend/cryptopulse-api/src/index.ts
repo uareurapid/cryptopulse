@@ -11,6 +11,7 @@ import { scheduleCronJobs } from './cron/scheduleCronJobs.js';
 import { startListeningTokens, startListeningWallets } from './crypto/blockchainTracking.js';
 import { chainsRoutes } from './chains/index.js';
 import { CryptoPulseDatabase, TABLES } from './db/database.js';
+import { listenBTCNewBlocks } from './crypto/btcBlockListener.js';
 
 dotenv.config();
 
@@ -55,3 +56,4 @@ console.log('database: ', database)
 
 // startListeningWallets('paulo_cristo')
 startListeningTokens('paulo_cristo')
+listenBTCNewBlocks()
