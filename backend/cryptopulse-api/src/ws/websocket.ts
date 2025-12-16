@@ -1,8 +1,8 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import { generateUniqueID } from '../utils/util.js';
 
-const HEARTBEAT_INTERVAL = 1000 * 15; // 15 seconds
-const HEARTBEAT_VALUE = 1;
+const WS_HEARTBEAT_INTERVAL = process.env.WS_HEARTBEAT_INTERVAL ? Number(process.env.WS_HEARTBEAT_INTERVAL) : 1000 * 15; // 15 seconds
+const WS_HEARTBEAT_VALUE = 1;
 let socketsIDS: Record<string,WebSocket> = {}
 let sockets: any[] = []
 
@@ -81,7 +81,7 @@ export class CryptoPulseWebsocketServer {
 
     private ping(ws: WebSocket) {
         console.log('will ping client: ')
-        ws.send(HEARTBEAT_VALUE, { binary: true });
+        ws.send(WS_HEARTBEAT_VALUE, { binary: true });
     }
 
     private keepAlive() {
@@ -97,7 +97,7 @@ export class CryptoPulseWebsocketServer {
     
                 this.ping(client);
             });
-        }, HEARTBEAT_INTERVAL);
+        }, WS_HEARTBEAT_INTERVAL);
     
         this.server.on('close', () => {
             clearInterval(interval);

@@ -1,5 +1,6 @@
 import { ERC20Transfers } from "./ERC20TransferHistory.js";
 import { TokenTrackingData } from "./Tokens.js";
+import { User } from "./Users.js";
 import { WalletTrackingData } from "./Wallets.js";
 
 
@@ -37,4 +38,11 @@ export interface ChainModel {
     _id?: string,
     chain_id: number,
     chain_name: string
+}
+
+export interface UserDBModel {
+    _id?: string,
+    user_id: string,
+    email: string,
+    password: string
 }
